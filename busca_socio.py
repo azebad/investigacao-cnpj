@@ -13,13 +13,37 @@ import glob
 import os
 import sys
 import zipfile
+from datetime import datetime, timedelta
 
 import pandas as pd
 import requests
 from tqdm import tqdm
 
 BASE_PATH = os.path.join(os.path.dirname(__file__), "dados_receita")
-URL_BASE = "https://dados-abertos-rf-cnpj.casadosdados.com.br/arquivos/2026-03-16/"
+_SHARE_TOKEN = "YggdBLfdninEJX9"
+_WEBDAV_BASE = f"https://arquivos.receitafederal.gov.br/public.php/dav/files/{_SHARE_TOKEN}"
+
+
+def _descobrir_mes_disponivel():
+    """Tenta os últimos 6 meses e retorna o primeiro que responde com 200 ou 401."""
+    hoje = datetime.today().replace(day=1)
+    for i in range(6):
+        mes = (hoje - timedelta(days=i * 30)).strftime("%Y-%m")
+        url = f"{_WEBDAV_BASE}/{mes}/Socios0.zip"
+        try:
+            r = requests.head(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
+            if r.status_code in (200, 401):
+                return mes
+        except Exception:
+            continue
+    # fallback para o mês anterior ao atual
+    return (datetime.today().replace(day=1) - timedelta(days=1)).strftime("%Y-%m")
+
+
+def _url_base():
+    mes = _descobrir_mes_disponivel()
+    print(f"  Usando competência: {mes}")
+    return f"{_WEBDAV_BASE}/{mes}/"
 
 COLUNAS = [
     "cnpj_basico", "identif_socio", "nome_socio", "cnpj_cpf_socio",
@@ -37,11 +61,12 @@ QUALIFICACOES = {
 
 def baixar_arquivos():
     os.makedirs(BASE_PATH, exist_ok=True)
+    url_base = _url_base()
     print(f"Baixando Socios0.zip a Socios9.zip em: {BASE_PATH}\n")
     for i in range(10):
         nome = f"Socios{i}.zip"
         destino = os.path.join(BASE_PATH, nome)
-        url = f"{URL_BASE}{nome}"
+        url = f"{url_base}{nome}"
         if os.path.exists(destino) and os.path.getsize(destino) > 1_000_000:
             print(f"  {nome} ja existe ({os.path.getsize(destino)/1e6:.0f} MB) - pulando")
             continue
