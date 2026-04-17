@@ -1,0 +1,8 @@
+dados_receita/
+*.zip
+*.csv
+__pycache__/
+.env
+resultados/
+*.pyc
+.DS_Store
