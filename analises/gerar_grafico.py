@@ -1,43 +1,61 @@
+import openpyxl
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
-from datetime import date
 
-# Estimativa do peso aproximado do setor de utilities (energia elétrica,
-# saneamento e gás) na carteira teórica do Ibovespa, 2021-2026.
-# Construída a partir de eventos de mercado documentados (privatizações da
-# Eletrobras e da Sabesp, e a entrada do setor entre os 4 maiores do índice
-# em 2025) - NÃO são dados oficiais quadrimestrais da B3.
-pontos = [
-    (date(2021, 1, 1), 5.0, "Início de 2021"),
-    (date(2022, 1, 1), 5.5, "Início de 2022"),
-    (date(2022, 6, 1), 7.5, "Privatização da Eletrobras (jun/2022)"),
-    (date(2023, 1, 1), 7.0, "Início de 2023"),
-    (date(2024, 1, 1), 7.5, "Início de 2024"),
-    (date(2024, 7, 1), 8.5, "Privatização da Sabesp (jul/2024)"),
-    (date(2025, 1, 1), 9.0, "Início de 2025"),
-    (date(2025, 9, 1), 10.0, "Utilities vira o 4º maior setor do Ibovespa"),
-    (date(2026, 6, 1), 10.0, "Atual (jun/2026)"),
-]
+import os
+XLSX = os.path.join(os.path.dirname(__file__), "Ibov_mensal.xlsx")
 
-datas = [p[0] for p in pontos]
-pesos = [p[1] for p in pontos]
+wb = openpyxl.load_workbook(XLSX, data_only=True)
+ws = wb["Planilha1"]
+rows = list(ws.iter_rows(min_row=5, max_row=135, values_only=True))
+header = rows[0]
+dates = list(header[4:])
 
-fig, ax = plt.subplots(figsize=(10, 5.5))
-ax.plot(datas, pesos, marker="o", color="#1f7a4d", linewidth=2)
-
-destaques = {
-    date(2022, 6, 1): "Privatização\nEletrobras",
-    date(2024, 7, 1): "Privatização\nSabesp",
-    date(2025, 9, 1): "4º maior\nsetor do Ibovespa",
+# Empresas de utilities (energia elétrica, saneamento e gás) presentes no
+# Ibovespa ao longo do período. AXIA3/AXIA6/AXIA7 = Eletrobras (renomeada
+# para Axia Energia em nov/2025).
+util_tickers = {
+    "AXIA3", "AXIA5", "AXIA6", "AXIA7",  # Eletrobras / Axia Energia
+    "SBSP3",   # Sabesp
+    "EQTL3",   # Equatorial Energia
+    "CPLE3", "CPLE5", "CPLE6",  # Copel
+    "CMIG4",   # Cemig
+    "ENGI11",  # Energisa
+    "EGIE3",   # Engie Brasil Energia
+    "ISAE4",   # ISA Energia Brasil (ex-CTEEP)
+    "CSMG3",   # Copasa
+    "TAEE11",  # Taesa
+    "CPFE3",   # CPFL Energia
+    "AURE3",   # Auren Energia
+    "ENBR3",   # EDP - Energias do Brasil
 }
-for d, peso, _ in pontos:
-    if d in destaques:
+
+n = len(dates)
+sums = [0.0] * n
+for r in rows[1:]:
+    code = r[3]
+    if code in util_tickers:
+        for i, v in enumerate(r[4:]):
+            if isinstance(v, (int, float)):
+                sums[i] += v
+
+fig, ax = plt.subplots(figsize=(11, 5.5))
+ax.plot(dates, sums, color="#1f7a4d", linewidth=2)
+ax.fill_between(dates, sums, color="#1f7a4d", alpha=0.15)
+
+eventos = {
+    "2022-06": "Privatização da\nEletrobras (jun/2022)",
+    "2024-07": "Privatização da\nSabesp (jul/2024)",
+}
+for d, val in zip(dates, sums):
+    key = d.strftime("%Y-%m")
+    if key in eventos:
         ax.annotate(
-            destaques[d],
-            xy=(d, peso),
-            xytext=(0, 18),
+            eventos[key],
+            xy=(d, val),
+            xytext=(0, 25),
             textcoords="offset points",
             ha="center",
             fontsize=9,
@@ -45,20 +63,24 @@ for d, peso, _ in pontos:
             arrowprops=dict(arrowstyle="->", color="gray"),
         )
 
-ax.set_title("Peso estimado das utilities na carteira do Ibovespa (2021-2026)")
-ax.set_ylabel("% aproximado da carteira teórica")
-ax.set_ylim(0, 12)
+ax.set_title("Peso do setor de utilities na carteira do Ibovespa (jun/2021 - jun/2026)")
+ax.set_ylabel("% da carteira teórica do Ibovespa")
+ax.set_ylim(0, 18)
 ax.xaxis.set_major_locator(mdates.YearLocator())
 ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
 ax.grid(axis="y", linestyle="--", alpha=0.4)
 
 ax.text(
-    0.5, -0.18,
-    "Estimativa construída a partir de eventos de mercado (privatizações e notícias setoriais),\n"
-    "não a partir das carteiras teóricas quadrimestrais oficiais da B3.",
-    transform=ax.transAxes, ha="center", fontsize=8, style="italic", color="gray",
+    0.0, -0.18,
+    "Fonte: dados mensais da carteira teórica do Ibovespa (planilha fornecida pelo usuário).\n"
+    "Soma dos pesos de: Axia Energia/Eletrobras, Sabesp, Equatorial, Copel, Cemig, Energisa, Engie Brasil,\n"
+    "ISA Energia, Copasa, Taesa, CPFL Energia, Auren e EDP - Energias do Brasil.",
+    transform=ax.transAxes, ha="left", fontsize=8, style="italic", color="gray",
 )
 
 plt.tight_layout()
 plt.savefig("/home/user/investigacao-cnpj/analises/peso-utilities-ibovespa.png", dpi=150)
-print("done")
+
+# imprime resumo para conferência
+for d, s in zip(dates, sums):
+    print(d.strftime("%Y-%m"), round(s, 2))

@@ -2,50 +2,52 @@
 
 ## Resumo
 
-Nos últimos cinco anos, o setor de *utilities* (energia elétrica, saneamento
-e gás) praticamente dobrou seu peso na carteira teórica do Ibovespa, saindo
-de uma posição discreta para se tornar um dos quatro setores mais relevantes
-do índice. Esse movimento foi puxado por dois grandes eventos de
-privatização — Eletrobras (2022) e Sabesp (2024) — somados a um forte
-desempenho das ações do setor em 2025, beneficiadas pela perspectiva de queda
-de juros.
+Com base na carteira teórica mensal do Ibovespa, o setor de *utilities*
+(energia elétrica, saneamento e gás) **praticamente triplicou seu peso** no
+índice entre junho de 2021 e junho de 2026, saindo de **5,2%** para **15,7%**
+da carteira. O crescimento não foi linear: dois saltos concentrados coincidem
+exatamente com as privatizações da Eletrobras (2022) e da Sabesp (2024), além
+de uma trajetória de alta consistente ao longo de 2025.
 
 ## Linha do tempo
 
-- **2021-2022**: o setor mantinha peso modesto no índice, fragmentado entre
-  empresas como CPFL, Cemig, Equatorial, Energisa e Eletrobras (esta última
-  ainda com forte participação estatal).
-- **Junho de 2022**: a privatização da Eletrobras — maior oferta de ações do
-  ano no Brasil, R$ 33,7 bilhões — elevou de forma imediata o peso de ELET3
-  na carteira do Ibovespa em cerca de 2,5 pontos percentuais, levando o papel
-  à 8ª posição do índice.
-- **2023-2024**: o setor seguiu ganhando espaço de forma mais gradual, com
-  destaque para Equatorial e Energisa.
-- **Julho de 2024**: a privatização da Sabesp (R$ 14,8 bilhões, recorde do
-  setor de saneamento) trouxe novo aumento de peso, com a Equatorial
-  assumindo participação relevante na companhia.
-- **2025**: as utilities se tornaram o **4º maior setor do Ibovespa**. O
-  Índice de Utilidade Pública (UTIL B3) acumulou alta superior a 20% no ano,
-  bem acima dos cerca de 11% do Ibovespa, puxado por Equatorial, CPFL,
-  Eletrobras, Neoenergia, Energisa e Auren (sucessora da Cesp).
+- **Jun/2021 a mai/2022**: peso estável, entre 5,2% e 6,8%, com o setor
+  pulverizado entre Cemig, Copel, CPFL, Equatorial, Energisa, Engie, Taesa,
+  ISA Energia, Copasa, EDP e Sabesp (esta última ainda com peso pequeno,
+  ~0,7%).
+- **Jun/2022 — privatização da Eletrobras**: o peso do setor salta de 6,72%
+  para 8,83% em um único mês — alta de mais de 2 pontos percentuais,
+  praticamente toda explicada pelo aumento da participação da então ELET3
+  (hoje AXIA3, após o rebranding para Axia Energia em nov/2025).
+- **Jul/2022 a jun/2024**: alta gradual e consistente, de 8,8% para ~11%,
+  puxada principalmente pela valorização de Equatorial e pelo crescimento
+  contínuo de Sabesp (que já passava de 1,3% no início de 2024).
+- **Jul/2024 — privatização da Sabesp**: novo salto, de 11,09% para 12,26% em
+  um mês — o peso de SBSP3 mais que dobra (de ~1,25% para ~2,22%) com a
+  conclusão da oferta e a entrada da Equatorial como acionista de referência.
+- **2025**: trajetória de alta praticamente ininterrupta, de 12,7% (dez/2024)
+  para 15,6% (dez/2025), período em que o setor se consolidou entre os mais
+  relevantes do índice, beneficiado pelo caráter defensivo das utilities e
+  pela perspectiva de queda de juros.
+- **2026 (até jun)**: peso oscila na casa dos 15-16%, mantendo o patamar mais
+  alto de toda a série.
 
 ## Gráfico
 
-![Peso estimado das utilities na carteira do Ibovespa (2021-2026)](./peso-utilities-ibovespa.png)
+![Peso do setor de utilities na carteira do Ibovespa (jun/2021 - jun/2026)](./peso-utilities-ibovespa.png)
 
-> **Nota sobre os dados**: a B3 não publica um histórico público e
-> facilmente acessível do peso percentual exato de cada setor a cada
-> quadrimestre. O gráfico acima é uma **estimativa qualitativa**, construída
-> a partir dos eventos de mercado documentados acima (privatizações e
-> notícias setoriais) — não a partir das carteiras teóricas oficiais
-> quadrimestre a quadrimestre. Para um número exato em uma data específica,
-> é necessário consultar diretamente a carteira teórica vigente em
-> [b3.com.br](https://www.b3.com.br/pt_br/market-data-e-indices/indices/indices-amplos/indice-ibovespa-ibovespa-composicao-da-carteira.htm).
+O gráfico foi construído somando, mês a mês, o peso de todas as empresas de
+energia elétrica, saneamento e gás presentes na carteira teórica do Ibovespa:
+Axia Energia/Eletrobras (AXIA3/AXIA6/AXIA7, ex-ELET3/ELET6), Sabesp (SBSP3),
+Equatorial (EQTL3), Copel (CPLE3/5/6), Cemig (CMIG4), Energisa (ENGI11),
+Engie Brasil (EGIE3), ISA Energia/CTEEP (ISAE4), Copasa (CSMG3), Taesa
+(TAEE11), CPFL Energia (CPFE3), Auren (AURE3) e EDP - Energias do Brasil
+(ENBR3).
 
 ## Fontes
 
+- Carteira teórica mensal do Ibovespa, jun/2021-jun/2026 (dados fornecidos pelo usuário)
 - [Seu Dinheiro - Privatização da Eletrobras (2022)](https://www.seudinheiro.com/2022/empresas/privatizacao-da-eletrobras-preco-por-acao-elet3-julw/)
 - [Seu Dinheiro - Privatização da Sabesp: maior oferta de saneamento da história (2024)](https://www.seudinheiro.com/2024/empresas/sabesp-sbsp3-privatizacao-maior-oferta-saneamento-historia-rsgp-ccgg/)
+- [InfoMoney - Axia, ex-Eletrobras, estreia novo ticker na B3 (nov/2025)](https://www.infomoney.com.br/mercados/axia3-axia-ex-eletrobras-estreia-novo-ticker-na-b3-nesta-segunda/)
 - [Monte Bravo - Utilities: o setor de maior destaque na Bolsa em 2025](https://www.montebravo.com.br/blog/investimentos/utilities/)
-- [InfoMoney - "Conservadoras e queridinhas": por que as elétricas brilham na Bolsa em 2025?](https://www.infomoney.com.br/mercados/conservadoras-e-queridinhas-por-que-as-eletricas-brilham-na-bolsa-em-2025/)
-- [B3 - Composição da carteira do Ibovespa](https://www.b3.com.br/pt_br/market-data-e-indices/indices/indices-amplos/indice-ibovespa-ibovespa-composicao-da-carteira.htm)
