@@ -1,0 +1,100 @@
+<!--
+  Gráfico: peso do setor de utilities na carteira do Ibovespa (jun/2021 - jun/2026)
+  Como usar no WordPress:
+  1. Adicione um bloco "HTML personalizado" (Custom HTML) no editor.
+  2. Cole todo este código no bloco.
+  3. Publique/visualize a página - o gráfico é renderizado via Chart.js (carregado de um CDN).
+-->
+<div style="max-width: 900px; margin: 0 auto;">
+  <canvas id="utilitiesIbovChart"></canvas>
+  <p style="font-size: 0.8em; color: #666; font-style: italic; margin-top: 8px;">
+    Fonte: carteira teórica mensal do Ibovespa, jun/2021-jun/2026. Soma dos pesos de
+    Axia Energia/Eletrobras, Sabesp, Equatorial, Copel, Cemig, Energisa, Engie Brasil,
+    ISA Energia, Copasa, Taesa, CPFL Energia, Auren e EDP - Energias do Brasil.
+  </p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3"></script>
+<script>
+(function () {
+  const labels = ["06/2021","07/2021","08/2021","09/2021","10/2021","11/2021","12/2021","01/2022","02/2022","03/2022","04/2022","05/2022","06/2022","07/2022","08/2022","09/2022","10/2022","11/2022","12/2022","01/2023","02/2023","03/2023","04/2023","05/2023","06/2023","07/2023","08/2023","09/2023","10/2023","11/2023","12/2023","01/2024","02/2024","03/2024","04/2024","05/2024","06/2024","07/2024","08/2024","09/2024","10/2024","11/2024","12/2024","01/2025","02/2025","03/2025","04/2025","05/2025","06/2025","07/2025","08/2025","09/2025","10/2025","11/2025","12/2025","01/2026","02/2026","03/2026","04/2026","05/2026","06/2026"];
+  const data = [5.18,5.21,5.49,5.83,5.85,5.98,5.97,5.76,5.98,6.31,6.79,6.72,8.83,8.78,8.65,9.05,9.68,9.69,10.69,10.26,9.93,10.38,10.57,10.56,10.9,10.21,10.23,10.32,10.22,10.27,10.86,11.13,11.4,11.29,10.88,10.92,11.09,12.26,12.79,12.62,12.66,12.62,12.72,13.12,13.81,13.77,14.62,14.24,14.32,13.92,14.44,15.19,15.3,15.63,15.56,15.48,16.16,16.16,16.41,15.49,15.72];
+
+  const ctx = document.getElementById('utilitiesIbovChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Peso das utilities no Ibovespa (%)',
+        data: data,
+        borderColor: '#1f7a4d',
+        backgroundColor: 'rgba(31, 122, 77, 0.15)',
+        fill: true,
+        tension: 0.2,
+        pointRadius: 0,
+        borderWidth: 2,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: 'Peso do setor de utilities na carteira do Ibovespa (jun/2021 - jun/2026)'
+        },
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: (ctx) => ctx.parsed.y.toFixed(2) + '%'
+          }
+        },
+        annotation: {
+          annotations: {
+            eletrobras: {
+              type: 'line',
+              xMin: '06/2022',
+              xMax: '06/2022',
+              borderColor: '#888',
+              borderWidth: 1,
+              borderDash: [5, 5],
+              label: {
+                display: true,
+                content: 'Privatização\nEletrobras',
+                position: 'start',
+                font: { size: 10 },
+                backgroundColor: 'rgba(255,255,255,0.8)',
+                color: '#444'
+              }
+            },
+            sabesp: {
+              type: 'line',
+              xMin: '07/2024',
+              xMax: '07/2024',
+              borderColor: '#888',
+              borderWidth: 1,
+              borderDash: [5, 5],
+              label: {
+                display: true,
+                content: 'Privatização\nSabesp',
+                position: 'start',
+                font: { size: 10 },
+                backgroundColor: 'rgba(255,255,255,0.8)',
+                color: '#444'
+              }
+            }
+          }
+        }
+      },
+      scales: {
+        y: {
+          title: { display: true, text: '% da carteira teórica do Ibovespa' },
+          min: 0,
+          max: 18
+        }
+      }
+    }
+  });
+})();
+</script>
